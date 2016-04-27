@@ -19,8 +19,9 @@ var RiotModal = {
     },
 
     removeClass: function (ele, cls) {
+      var reg;
       if (hasClass(ele, cls)) {
-        var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+        reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
         ele.className = ele.className.replace(reg, ' ');
       }
     },
@@ -30,47 +31,23 @@ var RiotModal = {
       ov.className = 'md-overlay';
       document.body.appendChild(ov);
     },
-
-    generateModal: function() {
-      var md = document.createElement('DIV'),
-        modalId = 'modal-' + modalCounter,
-        modalEffect = 'md-effect-3';
-
-      this.ModalUtils.addClass(md, 'md-modal');
-
-      if(tag.instance.opts.RiotModal.id) {
-        md.id = modalId;
-      }
-
-      if(tag.instance.opts.RiotModal.effect) {
-        modalEffect = tag.instance.opts.RiotModal.effect;
-      }
-
-      this.ModalUtils.addClass(md, modalEffect); //@todo prob make config?
-    }
-
   },
 
   init: function(){
     var overlay, modal, close;
 
-    modalCounter++;
-
     overlay = document.querySelector( '.md-overlay' );
-    modal = this.root.querySelector( '#' + el.getAttribute( 'data-modal' ) );
-    close = modal.querySelector( '.md-close' );
 
     this.instance = this;
-
-    if(!modal) {
-      this.ModalUtils.generateModal();
-    }
 
     if(!overlay) {
       this.ModalUtils.generateOverlay();
     }
 
     [].slice.call( this.root.querySelectorAll( '.md-trigger' ) ).forEach( function( el, i ) {
+
+      modal = this.root.querySelector( '#' + el.getAttribute( 'data-modal' ) );
+      close = modal.querySelector( '.md-close' );
 
       function removeModal( hasPerspective ) {
         this.ModalUtils.removeClass( modal, 'md-show' );
