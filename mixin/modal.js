@@ -25,7 +25,9 @@ var RiotTagsModal = {
 
   init: function(){
 
-    var overlay = this.root.querySelector( '.md-overlay' );
+    var overlay = document.querySelector( '.md-overlay' );
+
+    console.log(overlay);
 
     [].slice.call( this.root.querySelectorAll( '.md-trigger' ) ).forEach( function( el, i ) {
 
