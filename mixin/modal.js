@@ -20,12 +20,20 @@ var RiotModal = {
         var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
         ele.className = ele.className.replace(reg, ' ');
       }
+    },
+
+    generateOverlay: function() {
+
+    },
+
+    generateClose: function() {
+      
     }
   },
 
   init: function(){
 
-    var overlay = document.querySelector( '.md-overlay' );
+    var overlay = this.root.querySelector( '.md-overlay' );
 
     console.log(overlay);
 
