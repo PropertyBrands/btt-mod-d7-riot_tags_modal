@@ -10,14 +10,14 @@ var RiotModal = {
     },
 
     addClass: function (ele, cls) {
-      if (!hasClass(ele, cls)) {
+      if (!this.ModalUtils.hasClass(ele, cls)) {
         ele.className += " " + cls;
       }
     },
 
     removeClass: function (ele, cls) {
       var reg;
-      if (hasClass(ele, cls)) {
+      if (this.ModalUtils.hasClass(ele, cls)) {
         reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
         ele.className = ele.className.replace(reg, ' ');
       }
@@ -70,7 +70,7 @@ var RiotModal = {
 
         if( self.ModalUtils.hasClass( el, 'md-setperspective' ) ) {
           setTimeout( function() {
-            self.ModalUtils.addClass( this.root.documentElement, 'md-perspective' );
+            self.ModalUtils.addClass( self.root.documentElement, 'md-perspective' );
           }, 25 );
         }
       });
