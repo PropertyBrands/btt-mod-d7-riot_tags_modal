@@ -32,22 +32,36 @@ var RiotModal = {
     },
 
     generateModal: function() {
-      var md = document.createElement('DIV');
-      md.className = 'md-modal md-effect-3'; //@todo prob make config?
-      md.id = 'modal-' + modalCounter;
+      var md = document.createElement('DIV'),
+        modalId = 'modal-' + modalCounter,
+        modalEffect = 'md-effect-3';
+
+      this.ModalUtils.addClass(md, 'md-modal');
+
+      if(tag.instance.opts.RiotModal.id) {
+        md.id = modalId;
+      }
+
+      if(tag.instance.opts.RiotModal.effect) {
+        modalEffect = modalId;
+      }
+
+      this.ModalUtils.addClass(md, modalEffect); //@todo prob make config?
     }
 
   },
 
   init: function(){
+    var overlay, modal, close;
 
-    var overlay = document.querySelector( '.md-overlay' ),
-      modal = this.root.querySelector( '#' + el.getAttribute( 'data-modal' ) ),
-      close = modal.querySelector( '.md-close' );
+    modalCounter++;
+
+    overlay = document.querySelector( '.md-overlay' );
+    modal = this.root.querySelector( '#' + el.getAttribute( 'data-modal' ) );
+    close = modal.querySelector( '.md-close' );
 
     this.instance = this;
 
-    modalCounter++;
 
     if(!modal) {
       this.ModalUtils.generateModal();
