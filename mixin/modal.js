@@ -43,7 +43,7 @@ var RiotModal = {
       }
 
       if(tag.instance.opts.RiotModal.effect) {
-        modalEffect = modalId;
+        modalEffect = tag.instance.opts.RiotModal.effect;
       }
 
       this.ModalUtils.addClass(md, modalEffect); //@todo prob make config?
@@ -61,7 +61,6 @@ var RiotModal = {
     close = modal.querySelector( '.md-close' );
 
     this.instance = this;
-
 
     if(!modal) {
       this.ModalUtils.generateModal();
