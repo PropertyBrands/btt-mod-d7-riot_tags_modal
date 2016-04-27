@@ -8,7 +8,7 @@ function riot_tags_modal_libraries_info() {
     'name' => 'RiotJS Modal',
     'vendor url' => 'http://bluetent.com/',
     'download url' => 'https://bluetent.com/',
-    'library path' => drupal_get_path('module', 'riot_tags_modal'),
+    'library path' => drupal_get_path('module', 'riot_tags_modal') . '/mixin',
     'files' => array(
       'js' => array(
         'modal.js',
@@ -16,6 +16,9 @@ function riot_tags_modal_libraries_info() {
       'css' => array(
         'modal.css'
       ),
+    ),
+    'dependencies' => array(
+      'riotjs',
     ),
   );
 

@@ -1,7 +1,7 @@
 /**
  * An updated version of modalEffects.js by http://www.codrops.com
  */
-var RiotTagsModal = {
+var RiotModal = {
 
   ModalUtils: {
 
@@ -68,3 +68,5 @@ var RiotTagsModal = {
   }
 
 };
+
+riot.mixin('RiotModal', RiotModal);
