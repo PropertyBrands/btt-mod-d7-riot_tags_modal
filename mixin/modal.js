@@ -3,8 +3,6 @@
  */
 var RiotModal = {
 
-  ModalContent: null,
-
   ModalUtils: {
 
     hasClass: function (ele, cls) {
@@ -33,26 +31,31 @@ var RiotModal = {
   },
 
   init: function(){
-    var overlay, modal, close;
+    var overlay;
 
     overlay = document.querySelector( '.md-overlay' );
-
-    this.instance = this;
 
     if(!overlay) {
       this.ModalUtils.generateOverlay();
     }
 
-    [].slice.call( this.root.querySelectorAll( '.md-trigger' ) ).forEach( function( el, i ) {
+    this.on('updated', function() {
+      this.updateModals();
+    });
 
-      modal = this.root.querySelector( '#' + el.getAttribute( 'data-modal' ) );
+  },
+
+  updateModals: function() {
+    var self = this, modal, close;
+    [].slice.call( this.root.querySelectorAll( '.md-trigger' ) ).forEach( function( el, i ) {
+      modal = self.root.querySelector( '#' + el.getAttribute( 'data-modal' ) );
       close = modal.querySelector( '.md-close' );
 
       function removeModal( hasPerspective ) {
-        this.ModalUtils.removeClass( modal, 'md-show' );
+        self.ModalUtils.removeClass( modal, 'md-show' );
 
         if( hasPerspective ) {
-          this.ModalUtils.removeClass( this.root.documentElement, 'md-perspective' );
+          self.ModalUtils.removeClass( this.root.documentElement, 'md-perspective' );
         }
       }
 
@@ -61,13 +64,13 @@ var RiotModal = {
       }
 
       el.addEventListener( 'click', function( ev ) {
-        this.ModalUtils.addClass( modal, 'md-show' );
+        self.ModalUtils.addClass( modal, 'md-show' );
         overlay.removeEventListener( 'click', removeModalHandler );
         overlay.addEventListener( 'click', removeModalHandler );
 
-        if( this.ModalUtils.hasClass( el, 'md-setperspective' ) ) {
+        if( self.ModalUtils.hasClass( el, 'md-setperspective' ) ) {
           setTimeout( function() {
-            this.ModalUtils.addClass( this.root.documentElement, 'md-perspective' );
+            self.ModalUtils.addClass( this.root.documentElement, 'md-perspective' );
           }, 25 );
         }
       });
@@ -78,7 +81,6 @@ var RiotModal = {
       });
 
     } );
-
   }
 
 };
