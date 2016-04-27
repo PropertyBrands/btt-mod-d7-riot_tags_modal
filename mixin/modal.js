@@ -1,6 +1,7 @@
 /**
  * An updated version of modalEffects.js by http://www.codrops.com
  */
+var modalCounter = 0;
 var RiotModal = {
 
   ModalUtils: {
@@ -23,19 +24,27 @@ var RiotModal = {
     },
 
     generateOverlay: function() {
-
+      var ov = document.createElement('DIV');
+      ov.className = 'md-overlay';
+      console.log(ov);
+      document.body.appendChild(ov);
     },
 
-    generateClose: function() {
-      
+    generateModal: function() {
+
     }
+
   },
 
   init: function(){
 
-    var overlay = this.root.querySelector( '.md-overlay' );
+    var overlay = document.querySelector( '.md-overlay' );
 
-    console.log(overlay);
+    if(!overlay) {
+      this.ModalUtils.generateOverlay();
+    }
+
+    modalCounter++;
 
     [].slice.call( this.root.querySelectorAll( '.md-trigger' ) ).forEach( function( el, i ) {
 
