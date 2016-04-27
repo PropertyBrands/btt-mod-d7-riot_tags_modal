@@ -1,8 +1,9 @@
 /**
  * An updated version of modalEffects.js by http://www.codrops.com
  */
-var overlay = document.querySelector( '.md-overlay' );
 var RiotModal = {
+
+  ModalOverlay: null,
 
   ModalUtils: {
 
@@ -24,19 +25,15 @@ var RiotModal = {
       }
     },
 
-    generateOverlay: function() {
+    generateOverlay: function(modal) {
       var ov = document.createElement('DIV');
       ov.className = 'md-overlay';
-      document.body.appendChild(ov);
+      modal.parentNode.insertBefore(ov, modal.nextSibling);
       return ov;
     }
   },
 
   init: function(){
-
-    if(!overlay) {
-      overlay = this.ModalUtils.generateOverlay();
-    }
 
     this.on('updated', function() {
       this.updateModals();
@@ -50,9 +47,12 @@ var RiotModal = {
       modal = self.root.querySelector( '#' + el.getAttribute( 'data-modal' ) );
       close = modal.querySelector( '.md-close' );
 
+      if(!self.ModalOverlay) {
+        self.ModalOverlay = self.ModalUtils.generateOverlay(modal);
+      }
+
       function removeModal( hasPerspective ) {
         self.ModalUtils.removeClass( modal, 'md-show' );
-        self.ModalUtils.removeClass( overlay, 'show' );
 
         if( hasPerspective ) {
           self.ModalUtils.removeClass( this.root.documentElement, 'md-perspective' );
@@ -65,9 +65,8 @@ var RiotModal = {
 
       el.addEventListener( 'click', function( ev ) {
         self.ModalUtils.addClass( modal, 'md-show' );
-        self.ModalUtils.addClass( overlay, 'show' );
-        overlay.removeEventListener( 'click', removeModalHandler );
-        overlay.addEventListener( 'click', removeModalHandler );
+        self.ModalOverlay.removeEventListener( 'click', removeModalHandler );
+        self.ModalOverlay.addEventListener( 'click', removeModalHandler );
 
         if( self.ModalUtils.hasClass( el, 'md-setperspective' ) ) {
           setTimeout( function() {

@@ -57,7 +57,7 @@ perspective effects (not including the modals and the overlay).
   background:#707070;
 }
 
-.md-overlay.show {
+.md-show ~ .md-overlay {
   opacity: .7;
   visibility: visible;
 }
