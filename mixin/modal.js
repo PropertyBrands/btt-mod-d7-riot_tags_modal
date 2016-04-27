@@ -1,6 +1,7 @@
 /**
  * An updated version of modalEffects.js by http://www.codrops.com
  */
+var overlay = null;
 var RiotModal = {
 
   ModalUtils: {
@@ -10,14 +11,14 @@ var RiotModal = {
     },
 
     addClass: function (ele, cls) {
-      if (!this.ModalUtils.hasClass(ele, cls)) {
+      if (!this.hasClass(ele, cls)) {
         ele.className += " " + cls;
       }
     },
 
     removeClass: function (ele, cls) {
       var reg;
-      if (this.ModalUtils.hasClass(ele, cls)) {
+      if (this.hasClass(ele, cls)) {
         reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
         ele.className = ele.className.replace(reg, ' ');
       }
@@ -31,8 +32,6 @@ var RiotModal = {
   },
 
   init: function(){
-    var overlay;
-
     overlay = document.querySelector( '.md-overlay' );
 
     if(!overlay) {
@@ -47,6 +46,7 @@ var RiotModal = {
 
   updateModals: function() {
     var self = this, modal, close;
+    console.log(self);
     [].slice.call( this.root.querySelectorAll( '.md-trigger' ) ).forEach( function( el, i ) {
       modal = self.root.querySelector( '#' + el.getAttribute( 'data-modal' ) );
       close = modal.querySelector( '.md-close' );
@@ -60,7 +60,7 @@ var RiotModal = {
       }
 
       function removeModalHandler() {
-        removeModal( this.ModalUtils.hasClass( el, 'md-setperspective' ) );
+        removeModal( self.ModalUtils.hasClass( el, 'md-setperspective' ) );
       }
 
       el.addEventListener( 'click', function( ev ) {
