@@ -4,6 +4,8 @@
 var modalCounter = 0;
 var RiotModal = {
 
+  ModalContent: null,
+
   ModalUtils: {
 
     hasClass: function (ele, cls) {
@@ -26,30 +28,36 @@ var RiotModal = {
     generateOverlay: function() {
       var ov = document.createElement('DIV');
       ov.className = 'md-overlay';
-      console.log(ov);
       document.body.appendChild(ov);
     },
 
     generateModal: function() {
-
+      var md = document.createElement('DIV');
+      md.className = 'md-modal md-effect-3'; //@todo prob make config?
+      md.id = 'modal-' + modalCounter;
     }
 
   },
 
   init: function(){
 
-    var overlay = document.querySelector( '.md-overlay' );
+    var overlay = document.querySelector( '.md-overlay' ),
+      modal = this.root.querySelector( '#' + el.getAttribute( 'data-modal' ) ),
+      close = modal.querySelector( '.md-close' );
+
+    this.instance = this;
+
+    modalCounter++;
+
+    if(!modal) {
+      this.ModalUtils.generateModal();
+    }
 
     if(!overlay) {
       this.ModalUtils.generateOverlay();
     }
 
-    modalCounter++;
-
     [].slice.call( this.root.querySelectorAll( '.md-trigger' ) ).forEach( function( el, i ) {
-
-      var modal = this.root.querySelector( '#' + el.getAttribute( 'data-modal' ) ),
-        close = modal.querySelector( '.md-close' );
 
       function removeModal( hasPerspective ) {
         this.ModalUtils.removeClass( modal, 'md-show' );
