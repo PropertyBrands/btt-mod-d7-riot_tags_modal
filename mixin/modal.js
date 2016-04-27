@@ -1,7 +1,6 @@
 /**
  * An updated version of modalEffects.js by http://www.codrops.com
  */
-var modalCounter = 0;
 var RiotModal = {
 
   ModalContent: null,
@@ -30,7 +29,7 @@ var RiotModal = {
       var ov = document.createElement('DIV');
       ov.className = 'md-overlay';
       document.body.appendChild(ov);
-    },
+    }
   },
 
   init: function(){
