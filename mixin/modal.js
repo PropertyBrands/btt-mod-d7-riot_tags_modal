@@ -4,7 +4,6 @@
 var RiotModal = {
 
   ModalOverlay: null,
-
   ModalUtils: {
 
     hasClass: function (ele, cls) {
@@ -42,47 +41,38 @@ var RiotModal = {
   },
 
   updateModals: function() {
-    var self = this, modal, close;
+    var self = this;
     [].slice.call( this.root.querySelectorAll( '.md-trigger' ) ).forEach( function( el, i ) {
-      modal = self.root.querySelector( '#' + el.getAttribute( 'data-modal' ) );
-      close = modal.querySelector( '.md-close' );
-
-      if(!self.ModalOverlay) {
-        self.ModalOverlay = self.ModalUtils.generateOverlay(modal);
+      if(!el.ModalOverlay) {
+        el.ModalContent = self.root.querySelector( '#' + el.getAttribute( 'data-modal' ) )
+        el.ModalClose = el.ModalClose || el.ModalContent.querySelector( '.md-close' )
+        el.ModalOverlay = self.ModalUtils.generateOverlay(el.ModalContent)
+        el.addEventListener( 'click', function( ev ) {
+          self.ModalUtils.addClass( el.ModalContent, 'md-show' );
+          el.ModalOverlay.removeEventListener( 'click', removeModalHandler )
+          el.ModalOverlay.addEventListener( 'click', removeModalHandler )
+          if( self.ModalUtils.hasClass( el, 'md-setperspective' ) ) {
+            setTimeout( function() {
+              self.ModalUtils.addClass( el.ModalContent, 'md-perspective' )
+            }, 25 )
+          }
+        })
+        el.ModalClose.addEventListener( 'click', function( ev ) {
+          removeModalHandler();
+        })
       }
-
       function removeModal( hasPerspective ) {
-        self.ModalUtils.removeClass( modal, 'md-show' );
-
+        console.log(el.ModalClose)
+        self.ModalUtils.removeClass( el.ModalContent, 'md-show' )
         if( hasPerspective ) {
-          self.ModalUtils.removeClass( this.root.documentElement, 'md-perspective' );
+          self.ModalUtils.removeClass( el.ModalContent, 'md-perspective' )
         }
       }
-
       function removeModalHandler() {
-        removeModal( self.ModalUtils.hasClass( el, 'md-setperspective' ) );
+        removeModal( self.ModalUtils.hasClass( el, 'md-setperspective' ) )
       }
-
-      el.addEventListener( 'click', function( ev ) {
-        self.ModalUtils.addClass( modal, 'md-show' );
-        self.ModalOverlay.removeEventListener( 'click', removeModalHandler );
-        self.ModalOverlay.addEventListener( 'click', removeModalHandler );
-
-        if( self.ModalUtils.hasClass( el, 'md-setperspective' ) ) {
-          setTimeout( function() {
-            self.ModalUtils.addClass( modal, 'md-perspective' );
-          }, 25 );
-        }
-      });
-
-      close.addEventListener( 'click', function( ev ) {
-        ev.stopPropagation();
-        removeModalHandler();
-      });
-
-    } );
+    })
   }
-
-};
+}
 
 riot.mixin('RiotModal', RiotModal);
