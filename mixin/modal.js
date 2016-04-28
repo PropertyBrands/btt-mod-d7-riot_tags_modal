@@ -62,7 +62,6 @@ var RiotModal = {
         })
       }
       function removeModal( hasPerspective ) {
-        console.log(el.ModalClose)
         self.ModalUtils.removeClass( el.ModalContent, 'md-show' )
         if( hasPerspective ) {
           self.ModalUtils.removeClass( el.ModalContent, 'md-perspective' )
