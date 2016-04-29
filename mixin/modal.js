@@ -55,11 +55,14 @@ var RiotModal = {
             setTimeout( function() {
               self.ModalUtils.addClass( el.ModalContent, 'md-perspective' )
             }, 25 )
+            self.trigger('md-show')
           }
         })
-        el.ModalClose.addEventListener( 'click', function( ev ) {
-          removeModalHandler();
-        })
+        if(typeof el.ModalClose != 'undefined' && el.ModalClose != null) {
+          el.ModalClose.addEventListener( 'click', function( ev ) {
+            removeModalHandler();
+          })
+        }
       }
       function removeModal( hasPerspective ) {
         self.ModalUtils.removeClass( el.ModalContent, 'md-show' )
